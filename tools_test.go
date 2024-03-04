@@ -108,3 +108,26 @@ func TestTools_UploadFiles(t *testing.T) {
 
 	}
 }
+
+func TestTools_CreateDirIfNotExists(t *testing.T) {
+	testTool := Tools{}
+
+	testFolder := "./testdata/test-folder"
+	err := testTool.CreateDirIfNotExists(testFolder)
+	if err != nil {
+		t.Error(err)
+	}
+	_, err = os.Stat("./testdata/test-folder")
+	if err != nil {
+		t.Error(err)
+	}
+
+	// create one more time, should not cause issues
+	err = testTool.CreateDirIfNotExists(testFolder)
+	if err != nil {
+		t.Error(err)
+	}
+
+	os.Remove(testFolder)
+
+}
